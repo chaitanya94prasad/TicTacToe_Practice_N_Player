@@ -30,14 +30,42 @@ public class Game {
         this.winningStrategies = winningStrategies;
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public List<Move> getMoves() {
+        return moves;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public int getNextPlayerIndex() {
+        return nextPlayerIndex;
+    }
+
+    public List<WinningStrategy> getWinningStrategies() {
+        return winningStrategies;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public static class Builder {
         private List<Player> players;
         private List<WinningStrategy> winningStrategies;
         private int dimension;
-
-        public static Builder builder() {
-            return new Builder();
-        }
 
         private Builder() {
             this.players = new ArrayList<Player>();
@@ -108,7 +136,8 @@ public class Game {
             validateUniqueSymbolForAllPlayers();
         }
 
-        private Game build() {
+        public Game build() {
+            validate();
             return new Game(players,new Board(dimension),winningStrategies);
         }
     }
