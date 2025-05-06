@@ -11,11 +11,10 @@ public class GameController {
 
     public Game createGame(int dimension, List<Player> players, List<WinningStrategy> winningStrategies) {
         try {
-            Game.Builder builder = Game.builder();
-            builder.setDimension(dimension);
-            builder.setPlayers(players);
-            builder.setWinningStrategies(winningStrategies);
-            return builder.build();
+
+            return Game.builder().setDimension(dimension)
+                    .setPlayers(players)
+                    .setWinningStrategies(winningStrategies).build();
         } catch (Exception e) {
             System.out.println("Could not start the Game");
         }
