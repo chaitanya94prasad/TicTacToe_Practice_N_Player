@@ -3,7 +3,7 @@ package controller;
 import enums.GameState;
 import model.Game;
 import model.Player;
-import strategies.WinningStrategy;
+import strategies.winningStrategy.WinningStrategy;
 
 import java.util.List;
 

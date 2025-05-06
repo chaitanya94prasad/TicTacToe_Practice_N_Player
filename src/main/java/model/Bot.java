@@ -2,7 +2,6 @@ package model;
 
 import enums.BotDifficultyLevel;
 import enums.PlayerType;
-import strategies.BotPlayingStrategy;
 
 public class Bot extends Player{
     private BotDifficultyLevel botDifficultyLevel;

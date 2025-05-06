@@ -1,8 +1,8 @@
-package strategies;
+package strategies.winningStrategy;
 
 import model.Board;
 import model.Player;
 
 public interface WinningStrategy {
-    Player checkWinner(Board board);
+    public Player checkWinner(Board board);
 }
