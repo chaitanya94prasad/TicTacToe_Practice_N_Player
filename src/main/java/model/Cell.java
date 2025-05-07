@@ -23,11 +23,11 @@ public class Cell {
 
     public void display() {
         if(null == player) {
-            System.out.println("| |");
+            System.out.print("| |");
         } else if(cellState.equals(CellState.BLOCKED)) {
-            System.out.println("|||");
+            System.out.print("|||");
         } else {
-            System.out.println("|" + player.getSymbol().getSymbolChar() + "|");
+            System.out.print("|" + player.getSymbol().getSymbolChar() + "|");
         }
     }
 

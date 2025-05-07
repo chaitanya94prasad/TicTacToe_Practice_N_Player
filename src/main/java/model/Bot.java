@@ -8,8 +8,8 @@ public class Bot extends Player{
     private BotDifficultyLevel botDifficultyLevel;
     private BotPlayingStrategy botPlayingStrategy;
 
-    public Bot(Long id, Symbol symbol, String name, BotDifficultyLevel botDifficultyLevel, BotPlayingStrategy botPlayingStrategy) {
-        super(id, symbol, name, PlayerType.BOT);
+    public Bot(Symbol symbol, String name, BotDifficultyLevel botDifficultyLevel, BotPlayingStrategy botPlayingStrategy) {
+        super(symbol, name, PlayerType.BOT);
         this.botDifficultyLevel = botDifficultyLevel;
         this.botPlayingStrategy = botPlayingStrategy;
     }

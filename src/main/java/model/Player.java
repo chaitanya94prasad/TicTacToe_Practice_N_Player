@@ -5,14 +5,15 @@ import enums.PlayerType;
 import java.util.Scanner;
 
 public class Player {
-    private Long id;
+    public static int idCounter = 0;
+    private int id;
     private Symbol symbol;
     private String name;
     private PlayerType playerType;
     private Scanner scanner;
 
-    public Player(Long id, Symbol symbol, String name, PlayerType playerType) {
-        this.id = id;
+    public Player(Symbol symbol, String name, PlayerType playerType) {
+        this.id = this.idCounter++;
         this.symbol = symbol;
         this.name = name;
         this.playerType = playerType;
@@ -25,15 +26,16 @@ public class Player {
         System.out.println("Please enter the col for the move");
         int col = scanner.nextInt();
 
-//        validate the move self
+        //TODO:        validate the move self
+        board.getBoard().get(row).get(col).setPlayer(this);
         return new Move(new Cell(row,col,this),this);
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
