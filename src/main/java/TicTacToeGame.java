@@ -1,11 +1,15 @@
 import controller.GameController;
+import enums.BotDifficultyLevel;
 import enums.GameState;
 import enums.PlayerType;
+import model.Bot;
 import model.Game;
 import model.Player;
 import model.Symbol;
+import strategies.botPlayingStrategy.BotPlayingStrategyFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -35,11 +39,18 @@ public class TicTacToeGame {
 
         if(isBotPresent.equals("Y")) {
             System.out.println("What is the name of the BOT");
-            String playerName = sc.next();
+            String botName = sc.next();
             System.out.println("What is the character symbol of the BOT");
             String characterSymbol = sc.next();
-            players.add(new Player(new Symbol(characterSymbol.charAt(0)),playerName, PlayerType.BOT));
+//            TODO: take input for bot difficulty level and create object accordingly
+            Bot bot = new Bot(new Symbol(characterSymbol.charAt(0)),botName,
+                    BotDifficultyLevel.EASY,
+                    BotPlayingStrategyFactory.getBotPlayingStrategyForDifficultyLevel(BotDifficultyLevel.EASY));
+            players.add(bot);
         }
+
+//        randomise the players
+        Collections.shuffle(players);
 
         Game game = gameController.createGame(dimension,players);
 
