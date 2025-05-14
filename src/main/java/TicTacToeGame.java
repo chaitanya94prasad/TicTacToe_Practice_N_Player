@@ -2,10 +2,7 @@ import controller.GameController;
 import enums.BotDifficultyLevel;
 import enums.GameState;
 import enums.PlayerType;
-import model.Bot;
-import model.Game;
-import model.Player;
-import model.Symbol;
+import model.*;
 import strategies.botPlayingStrategy.BotPlayingStrategyFactory;
 
 import java.util.ArrayList;
@@ -30,9 +27,9 @@ public class TicTacToeGame {
         }
 
         for (int i = 0; i < iteratorNumber; i++) {
-            System.out.println("What is the name of the player number:" + i+1);
+            System.out.println("What is the name of the player number:" + (i+1) );
             String playerName = sc.next();
-            System.out.println("What is the character symbol of the player");
+            System.out.println("What is the character symbol of the player" + (i+1));
             String characterSymbol = sc.next();
             players.add(new Player(new Symbol(characterSymbol.charAt(0)),playerName, PlayerType.HUMAN));
         }
@@ -53,21 +50,22 @@ public class TicTacToeGame {
         Collections.shuffle(players);
 
         Game game = gameController.createGame(dimension,players);
-
+        int playerIndex = 0;
         while(game.getGameState().equals(GameState.IN_PROGRESS)) {
             System.out.println("CURRENT BOARD STATUS");
             gameController.displayBoard(game);
+            playerIndex++;
+            playerIndex = playerIndex % players.size();
+            System.out.println("player index:" + players.get(playerIndex).getName());
+            Move movePlayed = gameController.executeMove(game,players.get(playerIndex));
+            Player winner = gameController.checkWinner(game,movePlayed);
 
-            gameController.executeMove(game);
-
+            if (winner != null) {
+                gameController.displayBoard(game);
+                System.out.println("Winner is : " + winner.getName());
+                break;
+            }
 //            TODO: Logic for undo
-        }
-
-        System.out.println("GAME HAS ENDED, RESULT WAS : ");
-        if (gameController.getGameState(game).equals(GameState.DRAW)) {
-            System.out.println("GAME WAS A DRAW");
-        } else {
-            System.out.println("GAME IS WON BY : " + gameController.getWinner(game));
         }
     }
 }

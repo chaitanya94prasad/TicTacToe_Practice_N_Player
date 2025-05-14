@@ -1,5 +1,6 @@
 package strategies.winningStrategy;
 
+import exception.GameDrawException;
 import model.Board;
 import model.Move;
 import model.Player;
@@ -11,6 +12,7 @@ import java.util.List;
 public class OrderOneWinningStrategy implements WinningStrategy{
 
     private int dimension;
+    private int symbolsAdded;
     private List<HashMap<Character,Integer>> rowSymbolCount = new ArrayList<>();
     private List<HashMap<Character,Integer>> colSymbolCount = new ArrayList<>();
     private HashMap<Character,Integer> topLeftSymbolCount = new HashMap<>();
@@ -18,6 +20,7 @@ public class OrderOneWinningStrategy implements WinningStrategy{
     private HashMap<Character,Integer> cornerSymbolCount = new HashMap<>();
 
     public OrderOneWinningStrategy(int dimension) {
+        this.symbolsAdded = 0;
         this.dimension = dimension;
         for(int i = 0; i < dimension; i++) {
             rowSymbolCount.add(new HashMap<>());
@@ -42,11 +45,12 @@ public class OrderOneWinningStrategy implements WinningStrategy{
 
     @Override
     public Player checkWinner(Board board, Move lastMove) {
-        char symbol = lastMove.getCell().getPlayer().getSymbol().getSymbolChar();
+        symbolsAdded++;
+        Player lastMovePlayer = lastMove.getPlayer();
+        char symbol = lastMove.getPlayer().getSymbol().getSymbolChar();
         int row = lastMove.getCell().getRow();
         int col = lastMove.getCell().getCol();
         int dimension = board.getSize();
-        Player lastMovePlayer = lastMove.getPlayer();
 
         if(checkForRows(row,col,symbol,lastMove) != null) {
             return lastMovePlayer;
@@ -56,9 +60,14 @@ public class OrderOneWinningStrategy implements WinningStrategy{
             return lastMovePlayer;
         } else if(checkForDiagonalWins(row,col,symbol,lastMove) != null) {
             return lastMovePlayer;
-        } else {
-            return null;
         }
+
+        if(symbolsAdded == (dimension*dimension)) {
+            board.printBoard();
+            throw new GameDrawException("Game is drawn as cells are full");
+        }
+
+        return null;
     }
 
     private Player checkForDiagonalWins(int row, int col, char symbol, Move lastMove) {

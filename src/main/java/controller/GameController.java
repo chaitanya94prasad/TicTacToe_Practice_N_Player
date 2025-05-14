@@ -5,6 +5,7 @@ import model.Game;
 import model.Move;
 import model.Player;
 import strategies.winningStrategy.OrderOneWinningStrategy;
+import strategies.winningStrategy.WinningStrategy;
 
 import java.util.List;
 
@@ -33,15 +34,25 @@ public class GameController {
         return game.getGameState();
     }
 
-    public void executeMove(Game game) {
-        int nextPlayerIndex = game.getNextPlayerIndex();
-        Player nextPlayerToPlay = game.getPlayers().get(nextPlayerIndex);
-        Move move = nextPlayerToPlay.makeMove(game.getBoard());
+    public Move executeMove(Game game, Player player) {
+        Move move = player.makeMove(game.getBoard());
         updateGameMoves(game,move);
+        return move;
     }
 
     private void updateGameMoves(Game game, Move move) {
         game.getMoves().add(move);
+    }
+
+    public Player checkWinner(Game game, Move recentMove)
+    {
+        for (WinningStrategy winningStrategy : game.getWinningStrategies()) {
+            Player player = winningStrategy.checkWinner(game.getBoard(), recentMove);
+            if (player != null) {
+                return player;
+            }
+        }
+        return null;
     }
 
     public String getWinner(Game game) {

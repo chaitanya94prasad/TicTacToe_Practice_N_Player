@@ -1,5 +1,6 @@
 package model;
 
+import enums.CellState;
 import enums.PlayerType;
 
 import java.util.Scanner;
@@ -28,6 +29,7 @@ public class Player {
 
         //TODO:        validate the move self
         board.getBoard().get(row).get(col).setPlayer(this);
+        board.getBoard().get(row).get(col).setCellState(CellState.FILLED);
         return new Move(new Cell(row,col,this),this);
     }
 
